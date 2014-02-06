@@ -2,6 +2,7 @@ import praw
 import time
 import tweepy
 import string 
+import sys
 
 class countObj:
 	word = ''
@@ -18,6 +19,12 @@ class countObj:
 		temp += ' count: '
 		temp += str(self.count)
 		return temp
+		
+	def __lt__(self, other):
+		return (self.count > other.count)
+		
+	def get(self):
+		return self
 			
 	def increment(self):
 		global count
@@ -25,9 +32,6 @@ class countObj:
 		#print '*******INCREMENTING********'
 		#print count
 		
-
-seattleCount = 0
-denverCount = 0
 alreadyDone = []
 user_agent = ("reddit trending words by walter michelin"
 			  "github.com/wmichelin")
@@ -53,24 +57,23 @@ common = common + ' so up out if about who get which go me when make can like ti
 common = common + ' him know take word people into year your good some could them see other than then'
 common = common + ' now look only come its over think also back after use two how our work first'
 common = common + ' well way even new want because any these give day most us'
-common = common + ' oh thats is was are im thru has too lol here someone were very'
+common = common + ' oh thats is was are im thru has too lol here someone were very id cant'
+common = common + ' 1 2 3 4 5 6 7 8 9 0 . .. ... .... .....'
 
 common_words = []
 common_words = common.split()
 
-#############
-
 obj = []
-
-'''for word in common_words:
-	temp = countObj(word)
-	obj.append(temp)'''
-
-'''for x in range (0, len(obj)):
-	print obj[x].count'''
+duplicate = []
 
 while True:	
-	print '...'
+	for x in range (0 , 4):
+		sys.stdout.write('\r....')
+		sys.stdout.write('\r' + 'loading' + '.' * x)
+		sys.stdout.flush()
+		time.sleep(.2)
+		
+		
 	tempString = ''
 	checker = False 
 	all_comments = r.get_comments(all, limit=None)
@@ -83,30 +86,57 @@ while True:
 			words = tempString.split()
 	
 			for word in words:
-				temp = countObj('')
-				checker = False
-				word = word.lower()
 				for c in string.punctuation:
 					word = word.replace(c,"")
+				word = ''.join(word.split())
+				if word is not '':
+					if len(word) > 1:
+						if len(word) < 18:
+							temp = countObj('')
+							checker = False
+							word = word.lower()
+							print word
 
-				if word not in common_words:
-					for thing in obj:
-						if word is thing.word:
-							checker = True
-							#print 'DUPLICATE!!!!!!'
-							thing.increment()
+							if word not in common_words:
+								for thing in obj:
+									if word is thing.word:
+										print word
+										checker = True
+										print '*************DUPLICATE!!!!!!**********' + word
+										thing.get().increment()
 									
-					if checker == False:
-						temp = countObj(word) 
-						obj.append(temp)
-						#print 'appending! ' + word
+								if checker == False:
+										temp = countObj(word) 
+										obj.append(temp)
+										tempstr = temp.__str__()
+										print 'appending! ' + tempstr
 								
 		#for thing in obj:
 	#print 'PRINT OBJECT ARRAY HERE'
 	for thing in obj:
 		if thing.count > 0:
-			print thing
-	time.sleep(30)
+			if thing not in duplicate:
+				duplicate.append(thing)
+				print thing.word
+				print thing.count
+	
+	if len(duplicate) > 0:	
+		duplicate.sort()
+	
+	
+	print '*****************PRINTING DUPLICATE!!!!!!************************'
+	print str(len(duplicate))
+	for item in duplicate:
+		print item.word
+		print item.count
+	
+	
+	
+	
+	print 'sleeping'
+	time.sleep(15)
+	
+	
 
 
 
