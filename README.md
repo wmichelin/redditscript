@@ -1,7 +1,6 @@
-SUPER BOWL redditscript
+REDDIT TRENDS
 ============
 
 A python script to communicate and interact with reddit.com
-As of right now, the task this script will complete is to scan the comments of reddit.com/r/NFL and check for mentions of the words "seattle" and "denver". This is to keep a running tally of how many times each city has been mentioned on the site. 
-
-I intend to have this up and running in the cloud in the near future so it can run while my computer is off, as well as send the information to another location and organize it in a more readable fashion.
+This script scans the comments of reddit.com, filtering out comomonly used words as well as words longer than normal. It adds these words to a list. If a duplicate word is encountered, the program counts this and adds the duplicate object to a seperate list. 
+After all of this, the program will tweet the most trending words to @reddittrendbot
