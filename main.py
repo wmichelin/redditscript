@@ -28,20 +28,12 @@ class countObj:
 	def __lt__(self, other):
 		return (self.count > other.count)
 		
-	def copy(self):
-		temp = countObj(self.word, (self.count+1))
-		return temp
-		
-	def getCount(self):
-		return count
-			
-		
 alreadyDone = []
 user_agent = ("reddit trending words by walter michelin"
 			  "github.com/wmichelin")
 
 r = praw.Reddit(user_agent=user_agent)
-sub = 'gaming'
+sub = 'nfl'
 all = r.get_subreddit(sub)
 
 consumer_key = 'Ud6dfcMuiQGV2uh6kpkDng'
@@ -67,13 +59,18 @@ common = common + ' now look only come its over think also back after use two ho
 common = common + ' well way even new want because any these give day most us'
 common = common + ' oh thats is was are im thru has too lol here someone were very id cant'
 common = common + ' 1 2 3 4 5 6 7 8 9 0 . .. ... .... .....'
-common = common + ' become dont'
+common = common + ' become dont has more ever said ive every off sure had didnt same much'
+common = common + ' put many ill did'
 
 common_words = []
 common_words = common.split()
 
+global tempword
+tempword = ''
+global tempobject
+tempobject = countObj('', 0)
+
 obj = []
-duplicate = []
 
 timesrun = 0
 timestarted = str(datetime.now())
@@ -83,11 +80,13 @@ while True:
 		sys.stdout.write('\r....')
 		sys.stdout.write('\r' + 'loading' + '.' * x)
 		sys.stdout.flush()
+		time.sleep(.1)
 		
-	checker = False 
-	dupechecker = False
+	samechecker = False 
+	addchecker = False
+	index = 0
+	indextoadd = 0
 	all_comments = r.get_comments(all, limit=None)
-	anynew = False
 	
 	for comment in all_comments:
 		if comment.body not in alreadyDone:
@@ -97,70 +96,58 @@ while True:
 			words = []
 			words = tempString.split()
 			
-
-			#checking words from comments against previous words
-			i = 0
-			for word in words:
+			for x in words:
+				x = x.lower()
 				for c in string.punctuation:
-					word = word.replace(c,"")
-				word = word.lower()
-				word = word.strip()
-				if word not in common_words:	
-					print word
-					checker = False
-					for x in obj:
-						if x.word is word:
-							checker = True
-					if checker:
-						j = 0
-						dupechecker = False
-						for thing in duplicate:
-							if thing.word is word:
-								dupechecker = True
-								tempcount = thing.count
-								temp = duplicate[j].copy()
-								temp.setcount(tempcount + 1)
-								duplicate[j] = temp
-							j = j+1
-						if not dupechecker:
-							temp = x.copy()
-							duplicate.append(temp)
-					else:
-						temp = countObj(word, 0)
-						obj.append(temp)
-					
-					
-		
-
-	print 'size of object array: ' + str(len(obj))
-	print 'size of DUPLICATE array: ' + str(len(duplicate))
-	print '****************SORTING AND PRINTING DUPLICATES******************'
-	duplicate.sort()
-	for thing in duplicate:
-		print thing
-		
+					x = x.replace(c,"")
+				if x:
+					if x not in common_words:
+						if len(x) < 18:
+							if len(x) > 1:
+								tempword = x
+								samechecker = False
+								addchecker = False
+								index = 0
+								if len(obj) == 0 or len(obj) == 1:
+									print str(len(obj)) + ' items in obj... populating'
+									addchecker = True
+								else:
+									print 'PRINTING OBJ LIST OF SIZE ' + str(len(obj))
+									
+									for thing in range (0, 20):
+										try:
+											print obj[thing]
+										except:
+											pass
+									print '**************************'
+									for thing in obj:
+										if tempword == thing.word:
+											samechecker = True
+											indextoadd = index
+											temp = countObj(thing.word, thing.count + 1)
+											addchecker = False
+										index = index + 1
+								if not samechecker:
+									addchecker = True
+								if samechecker:
+									print 'duplicate! incrementing!'
+									obj[indextoadd] = temp
+									obj.sort()
+								if addchecker:
+									print 'new word! adding!'
+									temp = countObj(x, 0)
+									obj.append(temp)
+									obj.sort()
+								
 	output = 'Top 5 trending words on /r/' + sub + ' since ' + timestarted
 	output += '\n'
-	for x in range (0, 5):
-		output += duplicate[x].word + ' has been mentioned ' + str(duplicate[x].count + 1) + ' times.'
-		output += '\n'
-	print str(timesrun)
+	obj.sort()
+	for x in range(0, 5):
+		try:
+			output += obj[x]
+			output += '\n'
+		except:
+			pass
+	print 'PROGRAM RAN ' + str(timesrun) + ' times!!!!'
 	print output
-	if anynew:
-		timesrun =  timesrun + 1
-		
-	if (timesrun%10 == 0):
-		tweet(output)
-		print '*********** NEW TWEET ****************'
-		
-	
-	time.sleep(10)
-	
-	
-	
-		
-	
-
-
-
-		
+	time.sleep(30)		
