@@ -49,7 +49,6 @@ api = tweepy.API(auth)
 def tweet(self, input):
 	api.update_status(input)
 
-#api.update_status('hello world')
 
 common = 'the be to of and a in that have i it for not on with he as you do at word this but his by'
 common = common + ' from they we say her she or an will my one all would there their what word'
@@ -81,7 +80,8 @@ while True:
 		sys.stdout.write('\r' + 'loading' + '.' * x)
 		sys.stdout.flush()
 		time.sleep(.1)
-		
+	
+	anynew = False
 	samechecker = False 
 	addchecker = False
 	index = 0
@@ -139,15 +139,25 @@ while True:
 									obj.append(temp)
 									obj.sort()
 								
-	output = 'Top 5 trending words on /r/' + sub + ' since ' + timestarted
+	output = 'Top 3 trending words on /r/' + sub + ' since ' + timestarted
 	output += '\n'
 	obj.sort()
-	for x in range(0, 5):
+	for x in range(0, 3):
 		try:
-			output += obj[x]
+			output += obj[x].__str__()
 			output += '\n'
-		except:
+		except: 
+			print 'errors!!!!!!!!!!!!!!****'
 			pass
+			
+		
+	if anynew:
+		timesrun = timesrun + 1
 	print 'PROGRAM RAN ' + str(timesrun) + ' times!!!!'
 	print output
+	#api.update_status(output)
+
+	
+	if timesrun%5 == 0:
+		api.update_status(output)
 	time.sleep(30)		
