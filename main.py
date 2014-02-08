@@ -28,8 +28,10 @@ class countObj:
 		
 	def __lt__(self, other):
 		return (self.count > other.count)
-		
+
+#list of already seen comments		
 alreadyDone = []
+
 #reddit autentication
 user_agent = ("reddit trending words by walter michelin"
 			  "github.com/wmichelin")
@@ -64,7 +66,8 @@ common = common + ' better something is isnt another being around lot a while'
 common = common + ' thing actually anything doing love while able things where yeah used'
 common = common + ' wont looks simple does using might always maybe have having happen'
 common = common + ' thanks since enough through may pretty probably please try both few'
-common = common + ' made few ago case guy '
+common = common + ' made few ago case guy gt game feel down yes everyone years man woman'
+common = common + ' big thought theres gtgt ey'
 
 common_words = []
 #list of commonly used words
