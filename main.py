@@ -151,12 +151,12 @@ while True:
 									addchecker = True
 								if samechecker:
 									#debug purposes
-									print 'duplicate! incrementing!'
+									#print 'duplicate! incrementing!'
 									obj[indextoadd] = temp
 									obj.sort()
 								if addchecker:
 									#debug purposes
-									print 'new word! adding!'
+									#print 'new word! adding!'
 									temp = countObj(x, 0)
 									obj.append(temp)
 									obj.sort()
