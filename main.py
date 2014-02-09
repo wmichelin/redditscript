@@ -1,7 +1,7 @@
 #written by Walter Michelin TCNJ Class of '15 CS Dept
 import praw
 import time
-from datetime import datetime
+#from datetime import datetime
 import tweepy
 import string 
 import sys
@@ -68,7 +68,8 @@ common = common + ' thing actually anything doing love while able things where y
 common = common + ' wont looks simple does using might always maybe have having happen'
 common = common + ' thanks since enough through may pretty probably please try both few'
 common = common + ' made few ago case guy gt game feel down yes everyone years man woman'
-common = common + ' big thought theres gtgt ey'
+common = common + ' big thought theres gtgt ey each bad le lele post person bad without'
+common = common + ' ' 
 
 common_words = []
 #list of commonly used words
@@ -83,7 +84,9 @@ obj = []
 
 #counters
 timesrun = 0
-timestarted = str(datetime.now())
+print (time.strftime("%d/%m/%Y"))
+timestarted = time.strftime("%d/%m/%Y")
+
 
 #infinite loop
 while True:	
@@ -179,14 +182,13 @@ while True:
 		print output
 	#api.update_status(output)
 
-	
 	if timesrun%5 == 0:
-		try:
+		try:	
 			#tweets
 			api.update_status(output)
 			print '****PRINTED NEW TWEET****'
 			time.sleep(10)
+			time.sleep(30)		
 		except:
+			print 'tweet error'
 			pass
-	time.sleep(30)		
-	
