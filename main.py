@@ -174,8 +174,8 @@ while True:
 		
 	if anynew:
 		timesrun = timesrun + 1
-	print 'PROGRAM RAN ' + str(timesrun) + ' times!!!!'
-	print output
+		print 'PROGRAM RAN ' + str(timesrun) + ' times!!!!'
+		print output
 	#api.update_status(output)
 
 	
