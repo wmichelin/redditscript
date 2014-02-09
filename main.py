@@ -19,8 +19,9 @@ class countObj:
 	def __str__(self):
 		temp = ''
 		temp += self.word
-		temp += ' count: '
+		temp += ': mentioned '
 		temp += str(self.count)
+		temp += ' times'
 		return temp
 		
 	def setcount(num):
