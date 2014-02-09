@@ -90,7 +90,7 @@ while True:
 	#loading statement
 	for x in range (0 , 4):
 		sys.stdout.write('\r....')
-		sys.stdout.write('\r' + 'loading' + '.' * x)
+		sys.stdout.write('\r' + 'loading new posts' + '.' * x)
 		sys.stdout.flush()
 		time.sleep(.1)
 	#checkers
