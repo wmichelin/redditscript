@@ -69,7 +69,7 @@ common = common + ' wont looks simple does using might always maybe have having 
 common = common + ' thanks since enough through may pretty probably please try both few'
 common = common + ' made few ago case guy gt game feel down yes everyone years man woman'
 common = common + ' big thought theres gtgt ey each bad le lele post person bad without'
-common = common + ' ' 
+common = common + ' again else best kind ' 
 
 common_words = []
 #list of commonly used words
@@ -182,7 +182,7 @@ while True:
 		print output
 	#api.update_status(output)
 
-	if timesrun%5 == 0:
+	if timesrun%10 == 0:
 		try:	
 			#tweets
 			api.update_status(output)
